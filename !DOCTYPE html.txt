@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Soil Moisture Dashboard</title>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "your-project-id.firebaseapp.com",
+      databaseURL: "https://your-project-id-default-rtdb.firebaseio.com",
+      projectId: "your-project-id",
+      storageBucket: "your-project-id.appspot.com",
+      messagingSenderId: "SENDER_ID",
+      appId: "APP_ID"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    const soilMoistureRef = firebase.database().ref("SoilMoisture");
+    soilMoistureRef.on("value", (snapshot) => {
+      document.getElementById("moisture").innerText = snapshot.val();
+    });
+
+    function toggleIrrigation(state) {
+      firebase.database().ref("Irrigation").set(state);
+    }
+  </script>
+</head>
+<body>
+  <h1>Soil Moisture Dashboard</h1>
+  <p>Soil Moisture: <span id="moisture">Loading...</span></p>
+  <button onclick="toggleIrrigation(true)">Turn On Irrigation</button>
+  <button onclick="toggleIrrigation(false)">Turn Off Irrigation</button>
+</body>
+</html>
