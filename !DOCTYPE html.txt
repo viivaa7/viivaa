@@ -1,44 +1,49 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Soil Moisture Dashboard</title>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyA1vjsSaYjUOj4S3FVEXhVfZLSwNMoOYTg",
-      authDomain: "your-project-id.firebaseapp.com",
-      databaseURL: "https://viivaa-fc0e1-default-rtdb.firebaseio.com/",
-      projectId: "your-project-id",
-      storageBucket: "your-project-id.appspot.com",
-      messagingSenderId: "SENDER_ID",
-      appId: "APP_ID"
-    };
-    firebase.initializeApp(firebaseConfig);
-
-    const soilMoistureRef = firebase.database().ref("SoilMoisture");
-    soilMoistureRef.on("value", (snapshot) => {
-      document.getElementById("moisture").innerText = snapshot.val();
-    });
-
-    function toggleIrrigation(state) {
-      firebase.database().ref("Irrigation").set(state);
-    }
-  </script>
-</head>
-<body>
-  <h1>Soil Moisture Dashboard</h1>
-  <p>Soil Moisture: <span id="moisture">Loading...</span></p>
-  <button onclick="toggleIrrigation(true)">Turn On Irrigation</button>
-  <button onclick="toggleIrrigation(false)">Turn Off Irrigation</button>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Firebase Realtime Data</title>
+    <title>Soil Moisture Dashboard</title>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyA1vjsSaYjUOj4S3FVEXhVfZLSwNMoOYTg",
+            authDomain: "viivaa-fc0e1.firebaseapp.com",
+            databaseURL: "https://viivaa-fc0e1-default-rtdb.firebaseio.com/",
+            projectId: "viivaa-fc0e1",
+            storageBucket: "viivaa-fc0e1.appspot.com",
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Reference the soil moisture data from Firebase
+        const soilMoistureRef = firebase.database().ref("/soilMoisture");
+
+        // Listen for changes in soil moisture data
+        soilMoistureRef.on("value", (snapshot) => {
+            const moistureValue = snapshot.val();
+            document.getElementById("moisture").innerText = moistureValue !== null ? moistureValue : "No data";
+        });
+
+        // Function to control irrigation system
+        function toggleIrrigation(state) {
+            firebase.database().ref("/Irrigation").set(state);
+        }
+    </script>
 </head>
 <body>
-    <h1>Soil Moisture Monitoring</h1>
-    <p id="moisture">Loading...</p>
+    <h1>Soil Moisture Dashboard</h1>
+    <p>Soil Moisture Level: <span id="moisture">Loading...</span></p>
+
+    <!-- Buttons to toggle irrigation -->
+    <button onclick="toggleIrrigation(true)">Turn On Irrigation</button>
+    <button onclick="toggleIrrigation(false)">Turn Off Irrigation</button>
 </body>
 </html>
+
