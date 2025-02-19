@@ -31,5 +31,14 @@
   <p>Soil Moisture: <span id="moisture">Loading...</span></p>
   <button onclick="toggleIrrigation(true)">Turn On Irrigation</button>
   <button onclick="toggleIrrigation(false)">Turn Off Irrigation</button>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Realtime Data</title>
+</head>
+<body>
+    <h1>Soil Moisture Monitoring</h1>
+    <p id="moisture">Loading...</p>
 </body>
 </html>
