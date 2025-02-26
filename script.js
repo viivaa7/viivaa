@@ -15,6 +15,7 @@ firebase.initializeApp(firebaseConfig);
 // 📡 Reference to Firebase Database
 const database = firebase.database();
 const soilMoistureRef = database.ref("/soilMoisture");
+const lastUpdatedRef = database.ref("/lastUpdated");
 
 // 📊 Listen for Real-time Changes
 soilMoistureRef.on("value", (snapshot) => {
@@ -22,8 +23,20 @@ soilMoistureRef.on("value", (snapshot) => {
     document.getElementById("moisture").innerText = data + "%";
 });
 
+// ⏰ Fetch and Display Last Updated Time
+lastUpdatedRef.on("value", (snapshot) => {
+    const timestamp = snapshot.val();
+    if (timestamp) {
+        const date = new Date(timestamp);
+        document.getElementById("last-updated").innerText = date.toLocaleString();
+    } else {
+        document.getElementById("last-updated").innerText = "-";
+    }
+});
+
 // 💦 Toggle Irrigation System
 function toggleIrrigation(state) {
     database.ref("/Irrigation").set(state);
+    database.ref("/lastUpdated").set(Date.now()); // Update timestamp when irrigation changes
     alert("Irrigation turned " + (state ? "ON" : "OFF"));
 }
