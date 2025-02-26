@@ -54,6 +54,11 @@
             font-size: 24px;
             font-weight: bold;
         }
+        .timestamp {
+            font-size: 14px;
+            color: #666;
+            margin-top: 10px;
+        }
         button {
             background-color: #4CAF50;
             color: white;
@@ -108,6 +113,7 @@
         <div class="moisture-box">
             <h2>Soil Moisture Monitoring</h2>
             <p>Soil Moisture Level: <span id="moisture" class="data">Loading...</span></p>
+            <p class="timestamp">Last Updated: <span id="last-updated">-</span></p>
             <h2>Control Irrigation</h2>
             <button onclick="toggleIrrigation(true)">Turn On</button>
             <button onclick="toggleIrrigation(false)">Turn Off</button>
@@ -141,4 +147,3 @@
     </script>
 </body>
 </html>
-
