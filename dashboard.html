@@ -7,9 +7,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
-    <canvas id="moistureChart"></canvas>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>    
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         body {
@@ -38,6 +36,11 @@
         }
         .moisture-box {
             background-color: #dcedc8;
+        }
+        .chart-container {
+            width: 80%;
+            display: flex;
+            justify-content: center;
         }
         .info-panel {
             width: 30%;
@@ -75,17 +78,6 @@
         button:hover {
             background-color: #45a049;
         }
-        .level {
-            padding: 10px;
-            margin-top: 5px;
-            border-radius: 5px;
-            font-weight: bold;
-        }
-        .dry { background-color: #ffcccc; color: #b30000; }
-        .optimal { background-color: #ccffcc; color: #006600; }
-        .wet { background-color: #cce5ff; color: #003366; }
-        
-        /* Notification */
         .notification {
             display: none;
             position: fixed;
@@ -104,20 +96,13 @@
         <div class="container">
             <h1>🌱 VIIVAA - Soil Moisture Monitoring System</h1>
             <p>This is a real-time soil moisture monitoring system using an ESP32, Firebase, and a web dashboard hosted on GitHub Pages.</p>
-            <h2>🚀 Features</h2>
-            <ul>
-                <li>📡 <strong>Real-time Data:</strong> Monitors soil moisture levels using Firebase Realtime Database.</li>
-                <li>🌍 <strong>Web Dashboard:</strong> Displays live sensor data on a website.</li>
-                <li>💧 <strong>Irrigation Control:</strong> Users can turn irrigation ON/OFF remotely.</li>
-            </ul>
         </div>
 
         <div class="chart-container">
             <h2>Soil Moisture Trends</h2>
             <canvas id="moistureChart"></canvas>
         </div>
-        
-        
+
         <div class="moisture-box">
             <h2>Soil Moisture Monitoring</h2>
             <p>Soil Moisture Level: <span id="moisture" class="data">Loading...</span></p>
@@ -128,30 +113,6 @@
         </div>
     </div>
 
-    <div class="info-panel">
-        <h2>Understanding Soil Moisture Levels</h2>
-        <p><strong>Soil moisture</strong> is crucial for plant growth and health. Here’s a guide:</p>
-        <div class="level dry">🚨 <strong>Dry (0% - 30%)</strong>: Soil is too dry! Immediate watering needed.</div>
-        <div class="level optimal">✅ <strong>Optimal (31% - 60%)</strong>: Ideal moisture level for plant health.</div>
-        <div class="level wet">⚠️ <strong>Wet (61% - 100%)</strong>: Soil is too wet. Overwatering can harm plants.</div>
-        <p>Ensure proper irrigation for healthy plant growth. 🌿</p>
-    </div>
-
-    <div class="notification" id="notification">
-        <p>⚠️ Soil is too dry! Water the plants now.</p>
-        <button onclick="toggleIrrigation(true)">Water Now</button>
-        <button onclick="dismissNotification()">Dismiss</button>
-    </div>
-
     <script src="script.js"></script>
-    <script>
-        function showNotification() {
-            document.getElementById("notification").style.display = "block";
-            new Howl({ src: ['alert.mp3'] }).play();
-        }
-        function dismissNotification() {
-            document.getElementById("notification").style.display = "none";
-        }
-    </script>
 </body>
 </html>
