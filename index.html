@@ -7,6 +7,9 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+    <canvas id="moistureChart"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>    
+
 
     <style>
         body {
@@ -97,7 +100,6 @@
     </style>
 </head>
 <body>
-
     <div class="left-container">
         <div class="container">
             <h1>🌱 VIIVAA - Soil Moisture Monitoring System</h1>
@@ -109,6 +111,12 @@
                 <li>💧 <strong>Irrigation Control:</strong> Users can turn irrigation ON/OFF remotely.</li>
             </ul>
         </div>
+
+        <div class="chart-container">
+            <h2>Soil Moisture Trends</h2>
+            <canvas id="moistureChart"></canvas>
+        </div>
+        
         
         <div class="moisture-box">
             <h2>Soil Moisture Monitoring</h2>
