@@ -40,11 +40,40 @@ const moistureChart = new Chart(ctx, {
         responsive: true,
         maintainAspectRatio: false,
         scales: {
-            x: { title: { display: true, text: "Time" } },
+            x: {
+                title: { 
+                    display: true, 
+                    text: "Time",
+                    font: { size: 14, weight: "bold" }
+                },
+                ticks: {
+                    maxRotation: 45,
+                    minRotation: 45,
+                    padding: 5 // Prevents overlap
+                },
+                grid: {
+                    drawOnChartArea: false // Hides grid behind labels
+                }
+            },
             y: { 
                 min: 0, 
                 max: 100, 
                 title: { display: true, text: "Moisture Level (%)" } 
+            }
+        },
+        layout: {
+            padding: {
+                bottom: 30 // Moves time labels inside the white box
+            }
+        },
+        plugins: {
+            legend: {
+                display: true,
+                position: "top",
+                labels: {
+                    boxWidth: 15,
+                    font: { size: 12 }
+                }
             }
         }
     }
