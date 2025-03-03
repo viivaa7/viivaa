@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🌱 VIIVAA - Soil Moisture Monitoring System</title>
+
+    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    
+    <!-- External Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>    
-
 
     <style>
         body {
@@ -83,7 +86,7 @@
         .dry { background-color: #ffcccc; color: #b30000; }
         .optimal { background-color: #ccffcc; color: #006600; }
         .wet { background-color: #cce5ff; color: #003366; }
-        
+
         /* Notification */
         .notification {
             display: none;
@@ -96,20 +99,28 @@
             border-radius: 10px;
             box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
         }
-        .chart-container {
-    width: 80%;
-    margin: 20px auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
-    background-color: white;
-    text-align: center;
-}
 
+        /* 📊 Chart Container */
+        .chart-container {
+            width: 90%;
+            max-width: 800px;
+            height: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+            background-color: white;
+            text-align: center;
+        }
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
     </style>
 </head>
 <body>
+
     <div class="left-container">
         <div class="container">
             <h1>🌱 VIIVAA - Soil Moisture Monitoring System</h1>
@@ -122,7 +133,6 @@
             </ul>
         </div>
         
-        
         <div class="moisture-box">
             <h2>Soil Moisture Monitoring</h2>
             <p>Soil Moisture Level: <span id="moisture" class="data">Loading...</span></p>
@@ -131,20 +141,19 @@
             <button onclick="toggleIrrigation(true)">Turn On</button>
             <button onclick="toggleIrrigation(false)">Turn Off</button>
         </div>
-        <div class="chart-container">
-    <h2>📊 Soil Moisture Trends</h2>
-    <canvas id="moistureChart"></canvas>
-</div>
 
+        <div class="chart-container">
+            <h2>📊 Soil Moisture Trends</h2>
+            <canvas id="moistureChart"></canvas>
+        </div>
     </div>
 
     <div class="info-panel">
         <h2>Understanding Soil Moisture Levels</h2>
-        <p><strong>Soil moisture</strong> is crucial for plant growth and health. Here’s a guide:</p>
+        <p><strong>Soil moisture</strong> is crucial for plant growth and health.</p>
         <div class="level dry">🚨 <strong>Dry (0% - 30%)</strong>: Soil is too dry! Immediate watering needed.</div>
         <div class="level optimal">✅ <strong>Optimal (31% - 60%)</strong>: Ideal moisture level for plant health.</div>
         <div class="level wet">⚠️ <strong>Wet (61% - 100%)</strong>: Soil is too wet. Overwatering can harm plants.</div>
-        <p>Ensure proper irrigation for healthy plant growth. 🌿</p>
     </div>
 
     <div class="notification" id="notification">
@@ -154,15 +163,6 @@
     </div>
 
     <script src="script.js"></script>
-    <script>
-        function showNotification() {
-            document.getElementById("notification").style.display = "block";
-            new Howl({ src: ['alert.mp3'] }).play();
-        }
-        function dismissNotification() {
-            document.getElementById("notification").style.display = "none";
-        }
-    </script>
 </body>
 </html>
 
