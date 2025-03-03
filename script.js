@@ -1,10 +1,14 @@
+// 📌 Import Firebase SDK (Add this in your HTML file before your script.js)
+document.write('<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>');
+document.write('<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>');
+
 // 🔥 Firebase Configuration
 const firebaseConfig = {
     apiKey: "AIzaSyA1vjsSaYjUOj4S3FVEXhVfZLSwNMoOYTg",
     authDomain: "viivaa-fc0e1.firebaseapp.com",
     databaseURL: "https://viivaa-fc0e1-default-rtdb.firebaseio.com",
     projectId: "viivaa-fc0e1",
-    storageBucket: "viivaa-fc0e1.firebasestorage.app",
+    storageBucket: "viivaa-fc0e1.appspot.com",
     messagingSenderId: "629736113572",
     appId: "1:629736113572:web:2b558513c388c860156d31"
 };
@@ -36,17 +40,7 @@ const moistureChart = new Chart(ctx, {
         responsive: true,
         maintainAspectRatio: false,
         scales: {
-            x: { 
-                type: 'time',  // ✅ Gumagamit ng time-based axis
-                time: {
-                    unit: 'second',
-                    tooltipFormat: 'HH:mm:ss',
-                    displayFormats: {
-                        second: 'HH:mm:ss'
-                    }
-                },
-                title: { display: true, text: "Time" }
-            },
+            x: { title: { display: true, text: "Time" } },
             y: { 
                 min: 0, 
                 max: 100, 
@@ -58,6 +52,11 @@ const moistureChart = new Chart(ctx, {
 
 // 📊 Listen for Real-time Changes
 soilMoistureRef.on("value", (snapshot) => {
+    if (!snapshot.exists()) {
+        console.error("No data received from Firebase.");
+        return;
+    }
+    
     const data = snapshot.val();
     document.getElementById("moisture").innerText = data + "%";
 
@@ -65,7 +64,7 @@ soilMoistureRef.on("value", (snapshot) => {
     const now = new Date().toLocaleTimeString();
 
     // Maintain Only 10 Data Points
-    if (moistureChart.data.labels.length > 10) {
+    if (moistureChart.data.labels.length >= 10) {
         moistureChart.data.labels.shift();
         moistureChart.data.datasets[0].data.shift();
     }
@@ -77,29 +76,33 @@ soilMoistureRef.on("value", (snapshot) => {
 
     // 🔄 Auto-Irrigation Logic
     if (data < 30) {
-        toggleIrrigation(true); // Auto Turn ON
+        toggleIrrigation(true);
         showNotification("⚠️ Soil is too dry! Automatically turning on irrigation.");
     } else if (data > 60) {
-        toggleIrrigation(false); // Auto Turn OFF
+        toggleIrrigation(false);
     }
 });
 
 // ⏰ Fetch and Display Last Updated Time
 lastUpdatedRef.on("value", (snapshot) => {
-    const timestamp = snapshot.val();
-    if (timestamp) {
-        const date = new Date(timestamp);
-        document.getElementById("last-updated").innerText = date.toLocaleString();
-    } else {
+    if (!snapshot.exists()) {
         document.getElementById("last-updated").innerText = "-";
+        return;
     }
+
+    const timestamp = snapshot.val();
+    const date = new Date(timestamp);
+    document.getElementById("last-updated").innerText = date.toLocaleString();
 });
 
 // 💦 Toggle Irrigation System
 function toggleIrrigation(state) {
-    database.ref("/Irrigation").set(state);
-    database.ref("/lastUpdated").set(Date.now()); // Update timestamp when irrigation changes
-    alert("Irrigation turned " + (state ? "ON" : "OFF"));
+    database.ref("/Irrigation").set(state).then(() => {
+        database.ref("/lastUpdated").set(Date.now());
+        alert("Irrigation turned " + (state ? "ON" : "OFF"));
+    }).catch((error) => {
+        console.error("Error updating irrigation:", error);
+    });
 }
 
 // 📢 Show Notification
@@ -109,10 +112,18 @@ function showNotification(message) {
         <button onclick="toggleIrrigation(true)">Water Now</button>
         <button onclick="dismissNotification()">Dismiss</button>`;
     notification.style.display = "block";
-    new Howl({ src: ['alert.mp3'] }).play();
 }
 
 // ❌ Dismiss Notification
 function dismissNotification() {
     document.getElementById("notification").style.display = "none";
 }
+
+// ✅ Connection Test
+firebase.database().ref(".info/connected").on("value", (snapshot) => {
+    if (snapshot.val() === true) {
+        console.log("✅ Firebase connected.");
+    } else {
+        console.error("❌ Firebase not connected.");
+    }
+});
