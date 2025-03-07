@@ -21,6 +21,23 @@ const database = firebase.database();
 const soilMoistureRef = database.ref("/soilMoisture");
 const lastUpdatedRef = database.ref("/lastUpdated");
 
+const socket = new WebSocket("ws://192.168.1.100:81"); // Palitan ng ESP32 IP
+
+socket.onopen = function () {
+    console.log("✅ Connected to ESP32 WebSocket");
+};
+
+socket.onmessage = function (event) {
+    console.log("📩 Data received:", event.data);
+    document.getElementById("moistureLevel").innerText = `Moisture Level: ${event.data}%`;
+};
+
+function sendCommand(command) {
+    console.log("📤 Sending command:", command);
+    socket.send(command);
+}
+
+
 // 📈 Initialize Moisture Chart
 const ctx = document.getElementById("moistureChart").getContext("2d");
 const moistureChart = new Chart(ctx, {
