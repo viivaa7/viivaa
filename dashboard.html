@@ -117,6 +117,24 @@
             width: 100% !important;
             height: 100% !important;
         }
+        
+        .old-data-panel {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f0f0f0;
+    text-align: center;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+}
+
+.old-data-image {
+    width: 100px; /* Adjust size */
+    height: auto;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
     </style>
 </head>
 <body>
@@ -154,7 +172,15 @@
         <div class="level dry">🚨 <strong>Dry (0% - 30%)</strong>: Soil is too dry! Immediate watering needed.</div>
         <div class="level optimal">✅ <strong>Optimal (31% - 60%)</strong>: Ideal moisture level for plant health.</div>
         <div class="level wet">⚠️ <strong>Wet (61% - 100%)</strong>: Soil is too wet. Overwatering can harm plants.</div>
+        <!-- 📷 Old Data Image Panel -->
+<div class="old-data-panel">
+    <h3>📂 Previous Data</h3>
+    <img src="old-data.jpg" alt="Old Soil Moisture Data" class="old-data-image">
+</div>
+
     </div>
+    
+  
 
     <div class="notification" id="notification">
         <p>⚠️ Soil is too dry! Water the plants now.</p>
