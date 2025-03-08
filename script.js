@@ -21,6 +21,17 @@ const database = firebase.database();
 const soilMoistureRef = database.ref("/soilMoisture");
 const lastUpdatedRef = database.ref("/lastUpdated");
 
+// Mode Switching Function
+function setMode(mode) {
+    database.ref("system/mode").set(mode);
+    document.getElementById('manual-controls').style.display = (mode === 'manual') ? 'block' : 'none';
+}
+
+// Manual Irrigation Control
+function toggleIrrigation(state) {
+    database.ref("system/irrigation").set(state);
+}
+
 const socket = new WebSocket("ws://192.168.1.100:81"); // Palitan ng ESP32 IP
 
 socket.onopen = function () {
