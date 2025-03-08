@@ -87,6 +87,19 @@
         .optimal { background-color: #ccffcc; color: #006600; }
         .wet { background-color: #cce5ff; color: #003366; }
 
+        /* Notification */
+        .notification {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #ff4d4d;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+        }
+
         /* 📊 Chart Container */
         .chart-container {
             width: 90%;
@@ -104,35 +117,57 @@
             width: 100% !important;
             height: 100% !important;
         }
+        
+        .old-data-panel {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f0f0f0;
+    text-align: center;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+}
+.old-data-image {
+    width: 80%; /* Adjust size */
+    height: auto;
+    display: block;
+    margin: 10px auto;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+}
+
+
     </style>
 </head>
 <body>
+
     <div class="left-container">
         <div class="container">
             <h1>🌱 VIIVAA - Soil Moisture Monitoring System</h1>
             <p>This is a real-time soil moisture monitoring system using an ESP32, Firebase, and a web dashboard hosted on GitHub Pages.</p>
+            <h2>🚀 Features</h2>
+            <ul>
+                <li>📡 <strong>Real-time Data:</strong> Monitors soil moisture levels using Firebase Realtime Database.</li>
+                <li>🌍 <strong>Web Dashboard:</strong> Displays live sensor data on a website.</li>
+                <li>💧 <strong>Irrigation Control:</strong> Users can turn irrigation ON/OFF remotely.</li>
+            </ul>
         </div>
         
         <div class="moisture-box">
             <h2>Soil Moisture Monitoring</h2>
             <p>Soil Moisture Level: <span id="moisture" class="data">Loading...</span></p>
             <p class="timestamp">Last Updated: <span id="last-updated">-</span></p>
-            <h2>Mode Selection</h2>
-            <button onclick="setMode('manual')">Manual</button>
-            <button onclick="setMode('auto')">Automatic</button>
-            <div id="manual-controls" style="display: none;">
-                <h3>Manual Control</h3>
-                <button onclick="toggleIrrigation(true)">Turn On</button>
-                <button onclick="toggleIrrigation(false)">Turn Off</button>
-            </div>
+            <h2>Control Irrigation</h2>
+            <button onclick="toggleIrrigation(true)">Turn On</button>
+            <button onclick="toggleIrrigation(false)">Turn Off</button>
         </div>
-        
+
         <div class="chart-container">
             <h2>📊 Soil Moisture Trends</h2>
             <canvas id="moistureChart"></canvas>
         </div>
     </div>
-    
+
     <div class="info-panel">
         <h2>Understanding Soil Moisture Levels</h2>
         <p><strong>Soil moisture</strong> is crucial for plant growth and health.</p>
@@ -140,47 +175,39 @@
         <div class="level optimal">✅ <strong>Optimal (21% - 60%)</strong>: Ideal moisture level for plant health.</div>
         <div class="level wet">⚠️ <strong>Wet (61% - 100%)</strong>: Soil is too wet. Overwatering can harm plants.</div>
         <!-- 📷 Old Data Image Panel -->
-        <div class="old-data-panel">
-            <h3>📂 Previous Data</h3>
-            <img src="old-data.jpg" alt="Old Soil Moisture Data" class="old-data-image">
-        </div>
+<div class="old-data-panel">
+    <h3>📂 Previous Data</h3>
+    <img src="old-data.jpg" alt="Old Soil Moisture Data" class="old-data-image">
+</div>
+
     </div>
 
+  
+
+    <div class="notification" id="notification">
+        <p>⚠️ Soil is too dry! Water the plants now.</p>
+        <button onclick="toggleIrrigation(true)">Water Now</button>
+        <button onclick="dismissNotification()">Dismiss</button>
+    </div>
     <!-- 🔙 Back to Home Button -->
-    <div style="position: absolute; top: 20px; left: 20px;">
-        <a href="index.html" style="
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            text-decoration: none;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 5px;
-            border: none;
-            cursor: pointer;
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-        ">
-            ⬅ Back to Home
-        </a>
-    </div>
+<div style="position: absolute; top: 20px; left: 20px;">
+    <a href="index.html" style="
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    ">
+        ⬅ Back to Home
+    </a>
+</div>
 
-    <script>
-        function setMode(mode) {
-            alert("Mode switched to " + mode);
-            // Firebase logic to update mode in the database
-            if (mode === 'manual') {
-                document.getElementById('manual-controls').style.display = 'block';
-            } else {
-                document.getElementById('manual-controls').style.display = 'none';
-            }
-        }
-        function toggleIrrigation(state) {
-            alert("Irrigation turned " + (state ? "On" : "Off"));
-            // Firebase logic to toggle irrigation
-        }
-    </script>
-    
+
     <script src="script.js"></script>
 </body>
 </html>
-
