@@ -117,6 +117,12 @@
         <div class="container">
             <h1>🌱 VIIVAA - Soil Moisture Monitoring System</h1>
             <p>This is a real-time soil moisture monitoring system using an ESP32, Firebase, and a web dashboard hosted on GitHub Pages.</p>
+      <h2>🚀 Features</h2>
+            <ul>
+                <li>📡 <strong>Real-time Data:</strong> Monitors soil moisture levels using Firebase Realtime Database.</li>
+                <li>🌍 <strong>Web Dashboard:</strong> Displays live sensor data on a website.</li>
+                <li>💧 <strong>Irrigation Control:</strong> Users can turn irrigation ON/OFF remotely.</li>
+            </ul>
         </div>
         
         <div class="moisture-box">
@@ -151,16 +157,32 @@
         </div>
     </div>
 
-    <script>
-        function setMode(mode) {
-            alert("Mode switched to " + mode);
-            document.getElementById('manual-controls').style.display = (mode === 'manual') ? 'block' : 'none';
-        }
-        function toggleIrrigation(state) {
-            alert("Irrigation turned " + (state ? "On" : "Off"));
-        }
-    </script>
-    
+      <div class="notification" id="notification">
+        <p>⚠️ Soil is too dry! Water the plants now.</p>
+        <button onclick="toggleIrrigation(true)">Water Now</button>
+        <button onclick="dismissNotification()">Dismiss</button>
+    </div>
+    <!-- 🔙 Back to Home Button -->
+<div style="position: absolute; top: 20px; left: 20px;">
+    <a href="index.html" style="
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    ">
+        ⬅ Back to Home
+    </a>
+</div>
+
+
     <script src="script.js"></script>
 </body>
 </html>
+
+    
