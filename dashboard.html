@@ -110,6 +110,39 @@
             border-radius: 10px;
             box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
         }
+
+        #notification {
+    position: fixed; /* Laging nasa ibabaw kahit mag-scroll */
+    top: 10px; /* Ilagay sa itaas */
+    left: 50%;
+    transform: translateX(-50%); /* Nakagitna */
+    background-color: red; /* Kulay pula para warning */
+    color: white; /* Puting text para contrast */
+    padding: 15px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 9999; /* Nasa ibabaw ng lahat */
+    display: none; /* Default na nakatago */
+}
+
+/* Para sa buttons sa notification */
+#notification button {
+    margin-left: 10px;
+    background-color: white;
+    color: red;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+#notification button:hover {
+    background-color: #ffcccc; /* Light red kapag hover */
+}
+
     </style>
 </head>
 <body>
