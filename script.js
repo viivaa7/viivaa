@@ -56,21 +56,24 @@ const moistureChart = new Chart(ctx, {
                 ticks: {
                     maxRotation: 45,
                     minRotation: 45,
-                    padding: 5 // Prevents overlap
+                    padding: 5 
                 },
                 grid: {
-                    drawOnChartArea: false // Hides grid behind labels
+                    drawOnChartArea: false 
                 }
             },
             y: { 
                 min: 0, 
                 max: 100, 
-                title: { display: true, text: "Moisture Level (%)" } 
+                title: { display: true, text: "Moisture Level (%)" },
+                ticks: {
+                    stepSize: 10 
+                }
             }
         },
         layout: {
             padding: {
-                bottom: 30 // Moves time labels inside the white box
+                bottom: 30 
             }
         },
         plugins: {
@@ -130,16 +133,6 @@ lastUpdatedRef.on("value", (snapshot) => {
     const date = new Date(timestamp);
     document.getElementById("last-updated").innerText = date.toLocaleString();
 });
-
-// 💦 Toggle Irrigation System
-function toggleIrrigation(state) {
-    database.ref("/Irrigation").set(state).then(() => {
-        database.ref("/lastUpdated").set(Date.now());
-        alert("Irrigation turned " + (state ? "ON" : "OFF"));
-    }).catch((error) => {
-        console.error("Error updating irrigation:", error);
-    });
-}
 
 // 📢 Show Notification
 function showNotification(message) {
