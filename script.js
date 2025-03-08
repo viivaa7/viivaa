@@ -132,7 +132,7 @@ soilMoistureRef.on("value", (snapshot) => {
     moistureChart.update();
 
     // 🔄 Auto-Irrigation Logic
-    if (data < 30) {
+    if (data < 20) {
         toggleIrrigation(true);
         showNotification("⚠️ Soil is too dry! Automatically turning on irrigation.");
     } else if (data > 60) {
