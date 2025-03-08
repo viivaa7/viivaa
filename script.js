@@ -1,8 +1,4 @@
 // 📌 Import Firebase SDK (Add this in your HTML file before your script.js)
-document.write('<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>');
-document.write('<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>');
-
-// 🔥 Firebase Configuration
 const firebaseConfig = {
     apiKey: "AIzaSyA1vjsSaYjUOj4S3FVEXhVfZLSwNMoOYTg",
     authDomain: "viivaa-fc0e1.firebaseapp.com",
@@ -31,23 +27,6 @@ function setMode(mode) {
 function toggleIrrigation(state) {
     database.ref("system/irrigation").set(state);
 }
-
-const socket = new WebSocket("ws://192.168.1.100:81"); // Palitan ng ESP32 IP
-
-socket.onopen = function () {
-    console.log("✅ Connected to ESP32 WebSocket");
-};
-
-socket.onmessage = function (event) {
-    console.log("📩 Data received:", event.data);
-    document.getElementById("moistureLevel").innerText = `Moisture Level: ${event.data}%`;
-};
-
-function sendCommand(command) {
-    console.log("📤 Sending command:", command);
-    socket.send(command);
-}
-
 
 // 📈 Initialize Moisture Chart
 const ctx = document.getElementById("moistureChart").getContext("2d");
